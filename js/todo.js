@@ -23,20 +23,30 @@ $(document)
 
         // code to be implemented
 
+	//for editing 
+	$(document).on('dblclick', 'li', function () {
+            $(this).children('span').attr('contentEditable', 'true').focus().keypress(function (event){
+                    var keycode = (event.keyCode ? event.keyCode : event.which);
+                    if (keycode == '13') {
+                        event.target.blur();   
+		    }
+            });
+      	});
+
         $(document).on('click', 'input[name=done-todo]', function (event) {
              $(this)
              .parent()
              .toggleClass('checked');
              }
         );
-
+	
         function addTask(){
             var generatedUUID = generateUUID();
             var task = $('input[name=ListItem]').val();
             $('input[name=ListItem]').val("");
              $('ol').append('<li id=' + generatedUUID + ' class="">' +
-                '<input name="done-todo" type="checkbox" class="done-todo">' +
-                task + '</li>');
+                '<input name="done-todo" type="checkbox" class="done-todo"><span>' +
+                task + '</span></li>');
             console.log(tasksList);
         }
         $('#button').click(addTask);
